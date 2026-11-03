@@ -165,20 +165,20 @@ nor an `.env` file — codegen reads the committed schema — and diffs `apps/we
 
 Run from the repository root.
 
-| Command                                    | What it does                                            |
-| ------------------------------------------ | ------------------------------------------------------- |
-| `pnpm dev`                                 | API and web in parallel, `:4000` and `:3000`            |
-| `pnpm build`                               | `nest build` and `next build`                           |
-| `pnpm lint`                                | Biome check across the workspace, zero warnings allowed |
-| `pnpm format`                              | Biome check with `--write`                              |
-| `pnpm typecheck`                           | `tsc --noEmit` in every package                         |
-| `pnpm test`                                | Jest in every package; needs no database                |
-| `pnpm codegen`                             | GraphQL Codegen into `apps/web/src/gql`                 |
-| `pnpm db:up`                               | `docker compose up -d --wait`                           |
-| `pnpm db:migrate` / `pnpm db:seed`         | Run the pending migrations / insert the demo data       |
-| `pnpm db:setup`                            | `db:up` + `db:migrate` + `db:seed`                      |
-| `pnpm --filter api migration:create`         | New migration from the entity diff (`--name <slug>` names it) |
-| `pnpm --filter api migration:up` / `:down`  | Apply / revert the last migration on the local database |
+| Command                                    | What it does                                                  |
+| ------------------------------------------ | ------------------------------------------------------------- |
+| `pnpm dev`                                 | API and web in parallel, `:4000` and `:3000`                  |
+| `pnpm build`                               | `nest build` and `next build`                                 |
+| `pnpm lint`                                | Biome check across the workspace, zero warnings allowed       |
+| `pnpm format`                              | Biome check with `--write`                                    |
+| `pnpm typecheck`                           | `tsc --noEmit` in every package                               |
+| `pnpm test`                                | Jest in every package; needs no database                      |
+| `pnpm codegen`                             | GraphQL Codegen into `apps/web/src/gql`                       |
+| `pnpm db:up`                               | `docker compose up -d --wait`                                 |
+| `pnpm db:migrate` / `pnpm db:seed`         | Run the pending migrations / insert the demo data             |
+| `pnpm db:setup`                            | `db:up` + `db:migrate` + `db:seed`                            |
+| `pnpm --filter api migration:create`       | New migration from the entity diff (`--name <slug>` names it) |
+| `pnpm --filter api migration:up` / `:down` | Apply / revert the last migration on the local database       |
 
 ## Assumptions
 
@@ -192,22 +192,3 @@ Run from the repository root.
   the app proves that the caller is the user the header names.
 
 The five written answers to the interview questions live in [`ANSWERS.md`](ANSWERS.md).
-
-## Troubleshooting
-
-- **Port 5432 is already in use.** Another PostgreSQL is running. Change the host side of the mapping
-  in `docker-compose.yml` (for example `"127.0.0.1:5433:5432"`) and the port in `DATABASE_URL` in
-  `apps/api/.env`, then run `pnpm db:up` and `pnpm db:setup`.
-- **A migration or the seed failed.** Reset the local database and start over:
-  `docker compose down -v` (this deletes the `pgdata` volume), then `pnpm db:setup`.
-- **The web app cannot reach the API.** Check `NEXT_PUBLIC_API_URL` in `apps/web/.env` (the example
-  file points at `http://localhost:4000/graphql`) and `WEB_ORIGIN` in `apps/api/.env` (the API's CORS
-  origin, `http://localhost:3000` in the example). Both are read at start-up, so restart `pnpm dev`
-  after editing them.
-- **Apollo Sandbox and introspection are missing.** The API treats an unset `NODE_ENV` and any value
-  other than `development` as production, where internal error messages are replaced with a neutral one
-  as well. Local development sets `NODE_ENV=development` in `apps/api/.env`; never copy `.env.example`
-  into a deploy, because it carries exactly that line.
-- **The app asks for a user although one was picked.** The stored id
-  (`mini-wine-cellar.current-user-id` in Local Storage) no longer names an existing user — the database
-  was reset, for example. Pick a user in the switcher again, or clear that key.
