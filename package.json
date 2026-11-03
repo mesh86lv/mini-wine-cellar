@@ -1,0 +1,26 @@
+{
+  "name": "mini-wine-cellar",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.5.2",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=11.5.2 <12"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel --if-present dev",
+    "build": "pnpm -r --if-present build",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "codegen": "pnpm --filter web --if-present codegen",
+    "db:up": "docker compose up -d --wait",
+    "db:migrate": "pnpm --filter api --if-present migration:up",
+    "db:seed": "pnpm --filter api --if-present seed",
+    "db:setup": "pnpm db:up && pnpm db:migrate && pnpm db:seed"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.4"
+  }
+}

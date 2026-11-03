@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es2023",
+    "lib": ["es2023"],
+    "types": ["node", "jest"],
+    // The package root is the project root, so `nest build` emits `dist/src/...` and
+    // `dist/mikro-orm.config.js`. `start` and `migrations.path` follow that layout.
+    "rootDir": ".",
+    "outDir": "./dist",
+    "sourceMap": true,
+    "declaration": false,
+    "incremental": true,
+    "removeComments": false,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*.ts", "mikro-orm.config.ts", "jest.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}

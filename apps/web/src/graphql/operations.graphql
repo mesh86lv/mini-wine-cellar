@@ -1,0 +1,42 @@
+fragment BottleFields on Bottle {
+  id
+  name
+  producer
+  vintage
+  region
+  photoUrl
+  likesCount
+  createdAt
+}
+
+# Deliberately identical to the `likeBottle` selection: the optimistic like reads the cached record
+# with this fragment and writes the same shape back, so both sides rely on one definition.
+fragment BottleLikes on Bottle {
+  id
+  likesCount
+}
+
+query Users {
+  users {
+    id
+    name
+  }
+}
+
+query MyBottles {
+  myBottles {
+    ...BottleFields
+  }
+}
+
+mutation AddBottle($input: AddBottleInput!) {
+  addBottle(input: $input) {
+    ...BottleFields
+  }
+}
+
+mutation LikeBottle($id: ID!) {
+  likeBottle(id: $id) {
+    ...BottleLikes
+  }
+}

@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: cellar
+      POSTGRES_PASSWORD: cellar
+      POSTGRES_DB: mini_wine_cellar
+    ports:
+      # Loopback only: the dev database speaks `cellar:cellar` and must not answer on every
+      # interface of the host.
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cellar -d mini_wine_cellar"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
