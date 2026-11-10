@@ -1,0 +1,43 @@
+node_modules/
+.pnpm-store/
+
+# --- Logs ---
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# --- Next.js ---
+.next/
+out/
+# next-env.d.ts is NOT ignored: Next generates it once, it is committed,
+# and it is needed for types in a fresh clone.
+
+# --- Build and test artifacts ---
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# --- Environment variables ---
+# Only examples live in the repository (`*.example`, §0.8); real values never do.
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# --- Nix ---
+result
+result-*
+.direnv/
+.envrc.local
+
+# --- OS and IDE ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# --- Temporary files and caches ---
+*.tmp
+.cache/
+.turbo/

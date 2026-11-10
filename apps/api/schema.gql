@@ -1,0 +1,48 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input AddBottleInput {
+  name: String!
+  photoUrl: String
+  producer: String!
+  region: String!
+  vintage: Int!
+}
+
+type Bottle {
+  createdAt: DateTime!
+  id: ID!
+  likesCount: Int!
+  name: String!
+  photoUrl: String
+  producer: String!
+  region: String!
+  vintage: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  """Adds a bottle to the current user's cellar."""
+  addBottle(input: AddBottleInput!): Bottle!
+
+  """Increments the like counter of one of the current user's bottles."""
+  likeBottle(id: ID!): Bottle!
+}
+
+type Query {
+  """The current user's bottles, newest first."""
+  myBottles: [Bottle!]!
+
+  """The users available for the fake login."""
+  users: [User!]!
+}
+
+type User {
+  id: ID!
+  name: String!
+}
